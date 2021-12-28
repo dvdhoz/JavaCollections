@@ -1,11 +1,10 @@
 package com.company;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class theatre {
     private final String theatreName; //field only available in this class, when field is instantiated, the String name does not change
-    private List<Seat> seats = new ArrayList<>();  // field only available within the theatre class, creates an array list of  type Seats called seats
+    private Collection<Seat> seats = new LinkedHashSet<>();  // field only available within the theatre class, creates an array list of  type Seats called seats
 
     public theatre(String theatreName, int numRows, int seatsPerRow) {  // constructor that takes in a name, num of rows, and seats per row.  Whenever the theatre class is instantiated, need to specify these values
         this.theatreName = theatreName;  //theatre Name from the field will reference theatreName
@@ -45,34 +44,34 @@ public class theatre {
         }
     }
 
-    private class Seat {
-        private final String seatNumber;
-        private boolean reserved = false;
+    private class Seat { // Seat class can only be used within theatre class
+        private final String seatNumber;  //can only be used within Seat class, the instantiated seat number cannot be changed/re-referenced
+        private boolean reserved = false;  // can only be used in the Seat class, starts the reserved field as false
 
         public Seat(String seatNumber) {
             this.seatNumber = seatNumber;
-        }
+        }  //constructor for the Seat class with seat number as parameter field
 
-        public boolean reserve() {
-            if(!this.reserved) {
-                this.reserved = true;
+        public boolean reserve() {  // public method setting the seat class to true when reserved
+            if(!this.reserved) {  //if reserved field is false
+                this.reserved = true;  //set the reserved field to true
                 System.out.println("Seat " + seatNumber + " reserved");
-                return true;
+                return true; // return true, needs to return true because the reserveSeat method in the theatre class requires a boolean return type
             } else {
-                return false;
+                return false;  // returns false when this.reserved is true, so the seat cannot be reserved
             }
         }
 
-        public boolean cancel() {
-            if(this.reserved) {
+        public boolean cancel() { // public method that cancels a reserved seat
+            if(this.reserved) {  //if reserved is true
                 System.out.println("Reservation of seat " + seatNumber + " cancelled");
-                return true;
+                return true;  //return true
             } else {
-                return false;
+                return false;  //return false
             }
         }
 
-        public String getSeatNumber() {
+        public String getSeatNumber() {  // getter for seat number
             return seatNumber;
         }
     }
